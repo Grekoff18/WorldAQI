@@ -11,7 +11,16 @@ module.exports = {
     "at-rule-no-unknown": [
       true,
       {
-        ignoreAtRules: [],
+        ignoreAtRules: [
+           // --------
+          // Tailwind
+          // --------
+          'tailwind',
+          'apply',
+          'variants',
+          'responsive',
+          'screen',
+        ],
       },
     ],
     "no-duplicate-selectors": null,

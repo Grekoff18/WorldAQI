@@ -1,0 +1,17 @@
+$heading-font-family: "Cormorant Garamond", serif;
+$heading-font-weight: 600;
+
+$content-font-family: "Nunito", sans-serif;
+$content-font-weight: 400;
+
+%font-heading {
+  font-family: $heading-font-family;
+  font-weight: $heading-font-weight;
+  color: $color-heading-text;
+}
+
+%font-content {
+  font-family: $content-font-family;
+  font-weight: $content-font-weight;
+  color: $color-content-text;
+}

@@ -1,18 +1,32 @@
 <template>
-  <div id="nav">
-    Welcome to the Enterprise Boilerplate
+  <div id="app" class="bg-gray-100">
+    <GlobalSpinnerProvider>
+      <Layout>
+        <div id="nav"></div>
+        <router-view />
+      </Layout>
+    </GlobalSpinnerProvider>
   </div>
-  <router-view />
 </template>
 <script>
+import Layout from '@/layout/Layout'
+import GlobalSpinnerProvider from '@/components/common/spinner/GlobalSpinnerProvider.vue'
+import { setUser } from '@/services/stateful/userService'
+
+/**
+ * Set user name for Managing State / Stateful Services example
+ * need to implemet for auth
+ */
+setUser({
+  name: 'Vlad',
+})
+
 export default {
-  data() {
-    return {}
-  },
-  mounted() {
-    console.log(Hello);
+  components: {
+    Layout,
+    GlobalSpinnerProvider,
   },
 }
 </script>
-
-<style lang="scss"></style>
+<style lang="scss"  src="@/styles/index.scss">
+</style>

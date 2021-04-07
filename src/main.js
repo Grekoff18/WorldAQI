@@ -4,7 +4,7 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import { registerBaseComponents, loadPlugins } from '@/helpers'
-import '@/styles/base.css'
+import './styles/tailwind.css'
 
 // Export the app, so it can be accessed by plugins
 export const app = createApp(App)
