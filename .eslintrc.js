@@ -17,6 +17,7 @@ module.exports = {
     'vue/no-unused-vars': isDev ? 'off' : 'warn',
     'no-undef': isDev ? 'off' : 'warn',
     'no-unreachable': isDev ? 'off' : 'warn',
+    '@typescript-eslint/no-explicit-any': 'off',
   },
   overrides: [
     {

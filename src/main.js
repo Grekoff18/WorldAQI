@@ -5,9 +5,12 @@ import router from './router'
 import store from './store'
 import { registerBaseComponents, loadPlugins } from '@/helpers'
 import './styles/tailwind.css'
+import { runAxiosAuthInterceptor } from './api/helpers/axios-auth-interceptor'
 
 // Export the app, so it can be accessed by plugins
 export const app = createApp(App)
+
+runAxiosAuthInterceptor()
 
 /**
  * Specify plugins to load from the /plugins directory

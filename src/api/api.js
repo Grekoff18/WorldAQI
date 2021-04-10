@@ -1,43 +1,43 @@
-import axios from "axios";
+import axios, { axiosInstance } from 'axios'
 
 // Default config for the axios instance
 const axiosParams = {
   // Set different base URL based on the environment
   baseURL:
-    process.env.NODE_ENV === "development" ? "http://localhost:8080" : "/",
+    process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : '/',
   // Alternative if you have more environments
   // baseURL: process.env.VUE_APP_API_BASE_URL
-};
+}
 
 // Create axios instance with default params
-const axiosInstance = axios.create(axiosParams);
+const instance = axios.create(axiosParams)
 
-const didAbort = error => axios.isCancel(error);
+const didAbort = error => axios.isCancel(error)
 
-const getCancelSource = () => axios.CancelToken.source();
+const getCancelSource = () => axios.CancelToken.source()
 
 const withAbort = fn => async (...args) => {
-  const originalConfig = args[args.length - 1];
+  const originalConfig = args[args.length - 1]
   // Extract abort property from the config
-  let { abort, ...config } = originalConfig;
+  let { abort, ...config } = originalConfig
 
   // Create cancel token and abort method only if abort
   // function was passed
-  if (typeof abort === "function") {
-    const { cancel, token } = getCancelSource();
-    config.cancelToken = token;
-    abort(cancel);
+  if (typeof abort === 'function') {
+    const { cancel, token } = getCancelSource()
+    config.cancelToken = token
+    abort(cancel)
   }
 
   try {
     // Pass all arguments from args besides the config
-    return await fn(...args.slice(0, args.length - 1), config);
+    return await fn(...args.slice(0, args.length - 1), config)
   } catch (error) {
     // Add "aborted" property to the error if the request was cancelled
-    didAbort(error) && (error.aborted = true);
-    throw error;
+    didAbort(error) && (error.aborted = true)
+    throw error
   }
-};
+}
 
 // Main api function
 const api = axios => {
@@ -47,7 +47,18 @@ const api = axios => {
     patch: (url, body, config = {}) =>
       withAbort(axios.patch)(url, body, config),
     delete: (url, config = {}) => withAbort(axios.delete)(url, config),
-  };
-};
+  }
+}
 
-export default api(axiosInstance);
+// Here's our authorization header helper. It'll read the localStorage and
+// use a potentially available accessToken to refresh our user
+export const setAuthorizationHeader = () => {
+  // functional/immutable-data
+  // eslint-disable-next-line
+
+  instance.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
+    'accessToken'
+  ) || ''}`
+}
+
+export default api(instance)
